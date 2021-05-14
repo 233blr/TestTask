@@ -12,11 +12,14 @@
     "removeComments": true,
     "allowSyntheticDefaultImports": false,
     "jsx": "react",
-    "allowJs": false,
+    "allowJs": true,
     "baseUrl": "./",
     "paths": {
-      "components/*": [
-        "src/components/*"
+      // "components/*": [
+      //   "src/components/*"
+      // ],
+      "conteiners/*": [
+        "src/conteiners/*"
       ]
     }
   }
