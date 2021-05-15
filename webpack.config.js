@@ -10,6 +10,13 @@ module.exports = {
         path: path.join(__dirname, '/dist'),
         filename: 'bundle.min.js'
     },
+    devServer: {
+        contentBase: path.join(__dirname, 'build'),
+        historyApiFallback: true,
+        port: 4000,
+        open: true,
+        hot: true,
+    },
     module: {
         rules: [
             {
