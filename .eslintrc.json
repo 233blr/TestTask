@@ -1,11 +1,13 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "jest": true
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -17,7 +19,8 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks"
     ],
     "rules": {
         "no-use-before-define": "off",
@@ -26,12 +29,20 @@
         "import/extensions": ["error", "ignorePackages", {"ts": "never", "tsx": "never"}],
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
-        "@typescript-eslint/explicit-function-return-type": ["error",{"allowExpressions": true}],
         "max-len": ["warn", { "code": 80 }],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "import/prefer-default-export": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/jsx-max-props-per-line": [1, { "maximum": 5 }],
+        "react/jsx-no-bind": [{
+          "ignoreDOMComponents": true,
+          "ignoreRefs": true,
+          "allowArrowFunctions": true,
+          "allowFunctions": true,
+          "allowBind": true
+        }]
 
     },
     "settings": {
