@@ -46,19 +46,23 @@ const App:React.FC = () => {
       id: new Date().toLocaleString(),
       text,
     };
-    setTodos((prefTodos) => [...prefTodos, newTodo]);
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
   const todoDeletehandler = (todoId: string) => {
     setTodos((prevTodos) => prevTodos.filter((item) => item.id !== todoId));
   };
 
+  const sortedTodos: {id: string; text: string}[] = todos.sort((a, b) => {
+    return ((new Date(b.id) as any) - (new Date(a.id) as any))
+  });
+
   return (
     <Container className="App" maxWidth="xl">
       { alarm && <Alert className={classes.alarm} variant="filled" severity="error">No text!</Alert>}
 
       <NewTodo onAddTodo={todoAddHandler} />
-      <TodoList todo={todos} onDeleteTodo={todoDeletehandler} />
+      <TodoList todo={sortedTodos} onDeleteTodo={todoDeletehandler} />
     </Container>
   );
 };
