@@ -35,7 +35,7 @@
         "import/prefer-default-export": "off",
         "react/prop-types": "off",
         "react/jsx-props-no-spreading": "off",
-        "react/jsx-max-props-per-line": [1, { "maximum": 5 }],
+        "react/jsx-max-props-per-line": [1, { "maximum": 3 }],
         "react/jsx-no-bind": [{
           "ignoreDOMComponents": true,
           "ignoreRefs": true,

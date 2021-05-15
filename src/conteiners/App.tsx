@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
@@ -10,7 +11,7 @@ import TodoList from '../components/TodoLists';
 import NewTodo from '../components/NewTodo';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-  alarm: {
+  warning: {
     position: 'fixed',
     bottom: 20
   }
@@ -20,11 +21,12 @@ const App:React.FC = () => {
   const classes = useStyles();
   
   const [todos, setTodos] = React.useState<Todo[]>([]);
+  const [todoEditing, setTodoEditing] = React.useState<string | null>(null);
 
-  const [alarm, setAlarm] = React.useState(false);
+  const [warning, setWarning] = React.useState(false); // for alert message
 
   React.useEffect(() => {
-    const json = localStorage.getItem("todos");
+    const json = localStorage.getItem('todos');
     const loadedTodos = JSON.parse(json);
     if (loadedTodos) {
       setTodos(loadedTodos);
@@ -33,19 +35,20 @@ const App:React.FC = () => {
 
   React.useEffect(() => {
     const json = JSON.stringify(todos);
-    localStorage.setItem("todos", json);
+    localStorage.setItem('todos', json);
   }, [todos]);
 
   const todoAddHandler = (text: string) => {
     if (text === '') {
-      setAlarm(true);
-      setTimeout(() => setAlarm(false), 3000);
+      setWarning(true);
+      setTimeout(() => setWarning(false), 3000);
       return;
     }
     const newTodo = {
-      id: new Date().toLocaleString(),
-      text,
-    };
+      id: uuidv4(),
+      date: new Date().toLocaleString(),
+      text
+    }
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
@@ -53,16 +56,38 @@ const App:React.FC = () => {
     setTodos((prevTodos) => prevTodos.filter((item) => item.id !== todoId));
   };
 
-  const sortedTodos: {id: string; text: string}[] = todos.sort((a, b) => {
-    return ((new Date(b.id) as any) - (new Date(a.id) as any))
+  const canсelEdits = () => setTodoEditing(null);
+
+  const submitEdits = (id, editingText) => {
+    const updatedTodos = [...todos].map(todo => {
+      if (todo.id === id) {
+        todo.text = editingText;
+        todo.date = new Date().toLocaleString();
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    canсelEdits();
+  }
+
+  const sortedTodos: {id: string; date: string; text: string}[] = todos.sort((itemA, itemB) => {
+    return ((new Date(itemB.date) as any) - (new Date(itemA.date) as any))
   });
 
   return (
     <Container className="App" maxWidth="xl">
-      { alarm && <Alert className={classes.alarm} variant="filled" severity="error">No text!</Alert>}
+
+      { warning && <Alert className={classes.warning} variant="filled" severity="error">No text!</Alert>}
 
       <NewTodo onAddTodo={todoAddHandler} />
-      <TodoList todo={sortedTodos} onDeleteTodo={todoDeletehandler} />
+      <TodoList
+        todo={sortedTodos}
+        edit={todoEditing}
+        onDeleteTodo={todoDeletehandler}
+        onEditTodo={setTodoEditing}
+        onAddTodoEdits={submitEdits}
+        onCanсelHandler={canсelEdits}
+      />
     </Container>
   );
 };

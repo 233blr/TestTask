@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -23,13 +24,24 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface TodoListProps {
-    todo: {id: string, text: string}[];
+    todo: {id: string, date: string,  text: string}[];
+    edit: string;
     onDeleteTodo: (id: string) => void;
+    onEditTodo: (id: string) => void;
+    onAddTodoEdits: (id: string, editText: string) => void;
+    onCanсelHandler: () => void;
   }
 
-const TodoLists: React.FC<TodoListProps> = ({ todo, onDeleteTodo }) => {
+const TodoLists: React.FC<TodoListProps> = ({ todo, edit, onDeleteTodo, onEditTodo, onAddTodoEdits, onCanсelHandler }) => {
   const classes = useStyles();
 
+  const textInputRef = React.useRef<HTMLInputElement>(null);
+  
+  const todoEditsHandler = (id: string) => {
+    let enteredText: any = textInputRef; // remove type any !!!!!
+    onAddTodoEdits(id, enteredText.current.value);
+  }
+  
   return (
     <div className={classes.root}>
       {todo && todo.map((todo) => (
@@ -37,21 +49,19 @@ const TodoLists: React.FC<TodoListProps> = ({ todo, onDeleteTodo }) => {
           <Grid container direction="column" wrap="nowrap" spacing={2}>
             <Grid item xs>
               <Typography variant="caption" display="block" gutterBottom>
-                {todo.id}
+                {todo.date}
               </Typography>
-              <Typography noWrap>
-                {todo.text}
-              </Typography>
+
+              { todo.id === edit ? <Input
+                  inputRef={textInputRef}
+                  autoFocus
+                  fullWidth
+                  defaultValue={todo.text}
+                /> : <Typography noWrap>{todo.text}</Typography>
+              }
+
             </Grid>
             <Grid item xs>
-              <Button
-                className={classes.button}
-                variant="contained"
-                color="primary"
-                size="small"
-              >
-                Edit
-              </Button>
               <Button
                 onClick={onDeleteTodo.bind(null, todo.id)}
                 className={classes.button}
@@ -61,6 +71,36 @@ const TodoLists: React.FC<TodoListProps> = ({ todo, onDeleteTodo }) => {
               >
                 Delete
               </Button>
+
+              { todo.id === edit ? <Button
+                onClick={todoEditsHandler.bind(null, todo.id)}
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="small"
+              >
+                Submit edits
+              </Button> : <Button
+                onClick={onEditTodo.bind(null, todo.id)}
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="small"
+              >
+                Edit
+              </Button>
+              }
+
+              { todo.id === edit && <Button
+                onClick={onCanсelHandler}
+                className={classes.button}
+                variant="contained"
+                size="small"
+              >
+                Canсel
+              </Button>
+              }
+
             </Grid>
           </Grid>
         </Paper>
