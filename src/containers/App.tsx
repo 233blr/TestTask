@@ -71,8 +71,8 @@ const App: React.FC = () => {
   }
 
   const sortedTodos: Todo[] = [...todos].sort((a, b) => {
-    var dateA = new Date(a.date);
-    var dateB = new Date(b.date);
+    var dateA = new Date(a.date).getTime();
+    var dateB = new Date(b.date).getTime();
     return (dateB as any) - (dateA as any);
   });
 

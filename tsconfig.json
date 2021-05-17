@@ -19,7 +19,7 @@
         "src/components/*"
       ],
       "conteiners/*": [
-        "src/conteiners/*"
+        "src/containers/*"
       ]
     }
   }
