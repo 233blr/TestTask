@@ -70,10 +70,12 @@ const App:React.FC = () => {
     canсelEdits();
   }
 
-  const sortedTodos: {id: string; date: string; text: string}[] = todos.sort((itemA, itemB) => {
-    return ((new Date(itemB.date) as any) - (new Date(itemA.date) as any))
+  const sortedTodos: {id: string; date: string; text: string}[] = [...todos].sort((a, b) => {
+    var dateA = new Date(a.date);
+    var dateB = new Date(b.date);
+    return (dateB as any) - (dateA as any);
   });
-
+  
   return (
     <Container className="App" maxWidth="xl">
 

@@ -38,7 +38,7 @@ const TodoLists: React.FC<TodoListProps> = ({ todo, edit, onDeleteTodo, onEditTo
   const textInputRef = React.useRef<HTMLInputElement>(null);
   
   const todoEditsHandler = (id: string) => {
-    let enteredText: any = textInputRef; // remove type any !!!!!
+    let enteredText: {current: null | HTMLInputElement} = textInputRef;
     onAddTodoEdits(id, enteredText.current.value);
   }
   
