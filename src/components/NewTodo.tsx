@@ -5,6 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 import TextField from "@material-ui/core/TextField";
 
+import { NewTodoProps } from '../types/todo.interfaces';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -17,40 +19,36 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type NewTodoProps = {
-    onAddTodo: (todoText: string) => void;
-}
+const NewTodo: React.FC<NewTodoProps> = ({ onAddTodo }) => {
+  const textInputRef = React.useRef<HTMLInputElement>(null);
 
-const NewTodo: React.FC<NewTodoProps> = ({onAddTodo}) => {
-    const textInputRef = React.useRef<HTMLInputElement>(null);
+  const todoSubmitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    let enteredText = textInputRef;
+    onAddTodo(enteredText.current.value);
+    enteredText.current.value = '';
+  }
 
-    const todoSubmitHandler = (event: React.FormEvent) => {
-        event.preventDefault();
-        let enteredText = textInputRef;
-        onAddTodo(enteredText.current.value);
-        enteredText.current.value = '';
-    }
-
-    const classes = useStyles();
+  const classes = useStyles();
 
   return (
     <form onSubmit={todoSubmitHandler} className={classes.root}>
-        <TextField
-            inputRef={textInputRef}
-            type="text"
-            label="TODO"
-            placeholder="Add text"
-            fullWidth
-            InputLabelProps={{
-              shrink: true
-            }}
-            variant="outlined"
-            margin="normal"
-            size="small"
-        />
-        <IconButton className={classes.margin} type="submit" color="primary" aria-label="save">
-            <SaveIcon />
-        </IconButton>
+      <TextField
+        inputRef={textInputRef}
+        type="text"
+        label="TODO"
+        placeholder="Add text"
+        fullWidth
+        InputLabelProps={{
+          shrink: true
+        }}
+        variant="outlined"
+        margin="normal"
+        size="small"
+      />
+      <IconButton className={classes.margin} type="submit" color="primary" aria-label="save">
+        <SaveIcon />
+      </IconButton>
     </form>
   );
 }

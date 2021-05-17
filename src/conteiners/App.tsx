@@ -3,27 +3,27 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
-import { Todo } from './todo.models';
+import { Todo } from '../types/todo.interfaces';
 
 import TodoList from '../components/TodoLists';
 import NewTodo from '../components/NewTodo';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles(() => createStyles({
   warning: {
     position: 'fixed',
     bottom: 20
   }
 }));
 
-const App:React.FC = () => {
+const App: React.FC = () => {
   const classes = useStyles();
-  
+
   const [todos, setTodos] = React.useState<Todo[]>([]);
   const [todoEditing, setTodoEditing] = React.useState<string | null>(null);
 
-  const [warning, setWarning] = React.useState(false); // for alert message
+  const [warning, setWarning] = React.useState(false);
 
   React.useEffect(() => {
     const json = localStorage.getItem('todos');
@@ -70,16 +70,22 @@ const App:React.FC = () => {
     canсelEdits();
   }
 
-  const sortedTodos: {id: string; date: string; text: string}[] = [...todos].sort((a, b) => {
+  const sortedTodos: Todo[] = [...todos].sort((a, b) => {
     var dateA = new Date(a.date);
     var dateB = new Date(b.date);
     return (dateB as any) - (dateA as any);
   });
-  
+
   return (
     <Container className="App" maxWidth="xl">
 
-      { warning && <Alert className={classes.warning} variant="filled" severity="error">No text!</Alert>}
+      {warning && <Alert
+        className={classes.warning}
+        variant="filled"
+        severity="error"
+      >
+        No text!
+      </Alert>}
 
       <NewTodo onAddTodo={todoAddHandler} />
       <TodoList

@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 
+import { TodoListProps } from '../types/todo.interfaces';
+
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
@@ -23,25 +25,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-interface TodoListProps {
-    todo: {id: string, date: string,  text: string}[];
-    edit: string;
-    onDeleteTodo: (id: string) => void;
-    onEditTodo: (id: string) => void;
-    onAddTodoEdits: (id: string, editText: string) => void;
-    onCanсelHandler: () => void;
-  }
-
 const TodoLists: React.FC<TodoListProps> = ({ todo, edit, onDeleteTodo, onEditTodo, onAddTodoEdits, onCanсelHandler }) => {
   const classes = useStyles();
 
   const textInputRef = React.useRef<HTMLInputElement>(null);
-  
+
   const todoEditsHandler = (id: string) => {
-    let enteredText: {current: null | HTMLInputElement} = textInputRef;
+    let enteredText: { current: null | HTMLInputElement } = textInputRef;
     onAddTodoEdits(id, enteredText.current.value);
   }
-  
+
   return (
     <div className={classes.root}>
       {todo && todo.map((todo) => (
@@ -52,12 +45,12 @@ const TodoLists: React.FC<TodoListProps> = ({ todo, edit, onDeleteTodo, onEditTo
                 {todo.date}
               </Typography>
 
-              { todo.id === edit ? <Input
-                  inputRef={textInputRef}
-                  autoFocus
-                  fullWidth
-                  defaultValue={todo.text}
-                /> : <Typography noWrap>{todo.text}</Typography>
+              {todo.id === edit ? <Input
+                inputRef={textInputRef}
+                autoFocus
+                fullWidth
+                defaultValue={todo.text}
+              /> : <Typography noWrap>{todo.text}</Typography>
               }
 
             </Grid>
@@ -72,7 +65,7 @@ const TodoLists: React.FC<TodoListProps> = ({ todo, edit, onDeleteTodo, onEditTo
                 Delete
               </Button>
 
-              { todo.id === edit ? <Button
+              {todo.id === edit ? <Button
                 onClick={todoEditsHandler.bind(null, todo.id)}
                 className={classes.button}
                 variant="contained"
@@ -91,7 +84,7 @@ const TodoLists: React.FC<TodoListProps> = ({ todo, edit, onDeleteTodo, onEditTo
               </Button>
               }
 
-              { todo.id === edit && <Button
+              {todo.id === edit && <Button
                 onClick={onCanсelHandler}
                 className={classes.button}
                 variant="contained"
