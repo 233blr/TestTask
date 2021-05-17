@@ -2,28 +2,20 @@ import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import Container from '@material-ui/core/Container';
-import Alert from '@material-ui/lab/Alert';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Snackbar from "@material-ui/core/Snackbar";
 
 import { Todo } from '../types/todo.interfaces';
 
 import TodoList from '../components/TodoLists';
 import NewTodo from '../components/NewTodo';
 
-const useStyles = makeStyles(() => createStyles({
-  warning: {
-    position: 'fixed',
-    bottom: 20
-  }
-}));
-
 const App: React.FC = () => {
-  const classes = useStyles();
-
   const [todos, setTodos] = React.useState<Todo[]>([]);
   const [todoEditing, setTodoEditing] = React.useState<string | null>(null);
 
-  const [warning, setWarning] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     const json = localStorage.getItem('todos');
@@ -40,8 +32,7 @@ const App: React.FC = () => {
 
   const todoAddHandler = (text: string) => {
     if (text === '') {
-      setWarning(true);
-      setTimeout(() => setWarning(false), 3000);
+      setOpen(true);
       return;
     }
     const newTodo = {
@@ -79,13 +70,16 @@ const App: React.FC = () => {
   return (
     <Container className="App" maxWidth="xl">
 
-      {warning && <Alert
-        className={classes.warning}
-        variant="filled"
-        severity="error"
-      >
-        No text!
-      </Alert>}
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
+        open={open}
+        autoHideDuration={1000}
+        onClose={handleClose}
+        message="No text!"
+      />
 
       <NewTodo onAddTodo={todoAddHandler} />
       <TodoList
