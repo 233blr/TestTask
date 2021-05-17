@@ -5,7 +5,8 @@
   "main": "index.tsx",
   "scripts": {
     "start": "webpack serve --port 3000 --mode development --open --hot",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "lint": "eslint src/*"
   },
   "author": "",
   "license": "ISC",
