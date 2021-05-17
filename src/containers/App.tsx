@@ -6,6 +6,8 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import { Todo } from '../types/todo.interfaces';
 
+import LocalStorage from '../services/local-storage';
+
 import TodoList from '../components/TodoLists';
 import NewTodo from '../components/NewTodo';
 
@@ -18,16 +20,14 @@ const App: React.FC = () => {
   const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
-    const json = localStorage.getItem('todos');
-    const loadedTodos = JSON.parse(json);
+    const loadedTodos = LocalStorage.get();
     if (loadedTodos) {
       setTodos(loadedTodos);
     }
   }, []);
 
   React.useEffect(() => {
-    const json = JSON.stringify(todos);
-    localStorage.setItem('todos', json);
+    LocalStorage.set(todos);
   }, [todos]);
 
   const todoAddHandler = (text: string) => {
@@ -90,6 +90,7 @@ const App: React.FC = () => {
         onAddTodoEdits={submitEdits}
         onCanсelHandler={canсelEdits}
       />
+
     </Container>
   );
 };
