@@ -3,7 +3,11 @@ import * as ReactDOM from 'react-dom';
 
 import App from "./containers/App";
 
+import TodoProvider from './context';
+
 ReactDOM.render (
-    <App/>,
+  <TodoProvider>
+    <App/>
+  </TodoProvider>,
     document.getElementById("root")
 );

@@ -4,15 +4,15 @@ export interface Todo {
   text: string
 };
 
-export interface NewTodoProps {
-  onAddTodo: (todoText: string) => void;
-};
-
-export interface TodoListProps {
-  todo: { id: string, date: string, text: string }[];
-  edit: string;
-  onDeleteTodo: (id: string) => void;
-  onEditTodo: (id: string) => void;
-  onAddTodoEdits: (id: string, editText: string) => void;
-  onCanсelHandler: () => void;
+export interface ContextTypes {
+  sortedTodos: { id: string, date: string, text: string }[];
+  setTodos: any;
+  todoEditing: string | null;
+  open: boolean;
+  handleClose: () => void;
+  todoAddHandler: (text: string) => void;
+  todoDeletehandler: (todoId: string) => void;
+  canсelEdits: () => void;
+  submitEdits: (id: string, editingText: string) => void;
+  startEdits: (id: string) => void;
 };
