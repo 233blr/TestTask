@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import App from "./containers/App";
+import App from './containers';
 
 import TodoProvider from './context';
 
-ReactDOM.render (
+ReactDOM.render(
   <TodoProvider>
-    <App/>
+    <App />
   </TodoProvider>,
-    document.getElementById("root")
+  document.getElementById('root'),
 );

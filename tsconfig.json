@@ -20,7 +20,7 @@
       ],
       "conteiners/*": [
         "src/containers/*"
-      ]
+      ],
     }
   }
 }
