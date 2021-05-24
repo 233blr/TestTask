@@ -34,7 +34,7 @@ const TodoInput: React.FC = () => {
 
   return (
     <form
-      data-testid="inputConteiner"
+      data-testid="inputComponent"
       onSubmit={todoSubmitHandler}
       className={classes.root}
     >

@@ -38,7 +38,7 @@ const TodoItem: any = ({ todo }) => {
   };
 
   return (
-    <Paper data-testid="itemConteiner" key={todo.id} className={classes.paper}>
+    <Paper data-testid="itemComponent" key={todo.id} className={classes.paper}>
       <Grid
         container direction="column" wrap="nowrap"
         spacing={2}

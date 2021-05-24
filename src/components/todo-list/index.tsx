@@ -18,7 +18,7 @@ const TodoList: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <div data-testid="listConteiner" className={classes.root}>
+    <div data-testid="listComponent" className={classes.root}>
       {sortedTodos.map((item) => <TodoItem key={item.id} todo={item} />)}
     </div>
   );
