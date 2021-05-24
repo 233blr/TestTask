@@ -1,37 +1,46 @@
 import * as React from 'react';
-import { render, cleanup } from '@testing-library/react';
-// import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import TodoInput from '../components/todo-input';
-
-import TodoProvider from '../context';
+import { TodoContext } from '../context';
 
 describe('TodoInput test', () => {
-  afterEach(() => cleanup());
-
   let conteiner;
+  let todoAddHandlerMock;
 
   beforeEach(() => {
+    todoAddHandlerMock = jest.fn();
+
     conteiner = render(
-      <TodoProvider>
+      <TodoContext.Provider
+        value={{
+          todoAddHandler: todoAddHandlerMock,
+          sortedTodos: [],
+          setTodos: jest.fn(),
+          todoEditing: '',
+          open: true,
+          handleClose: jest.fn(),
+          todoDeletehandler: jest.fn(),
+          undoEdits: jest.fn(),
+          submitEdits: jest.fn(),
+          startEdits: jest.fn(),
+        }}
+      >
         <TodoInput />
-      </TodoProvider>,
+      </TodoContext.Provider>,
     );
   });
 
   test('should render TodoInput component', () => {
     const { getByTestId } = conteiner;
-    const inputConteiner = getByTestId('inputComponent');
-    expect(inputConteiner).toBeDefined();
+    const inputContainer = getByTestId('inputComponent');
+    expect(inputContainer).toBeDefined();
   });
 
-  // Вызвать submit
-
-  // test('should call submit', () => {
-  //   const todoSubmit = jest.fn();
-  //   const { getByTestId } = conteiner;
-  //   const inputConteiner = getByTestId('inputComponent');
-  //   fireEvent.submit(inputConteiner);
-  //   expect(todoSubmit).toHaveBeenCalled();
-  // });
+  test('should call todoAddHandlerMock', () => {
+    const { getByTestId } = conteiner;
+    const inputContainer = getByTestId('inputComponent');
+    fireEvent.submit(inputContainer);
+    expect(todoAddHandlerMock).toHaveBeenCalled();
+  });
 });

@@ -1,19 +1,22 @@
 import * as React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import TodoList from '../containers';
 
 import TodoProvider from '../context';
 
 describe('TodoList test', () => {
-  afterEach(() => cleanup());
+  let conteiner;
 
-  test('should render TodoList component', () => {
-    const conteiner = render(
+  beforeEach(() => {
+    conteiner = render(
       <TodoProvider>
         <TodoList />
       </TodoProvider>,
     );
+  });
+
+  test('should render TodoList component', () => {
     const listElement = conteiner.getByTestId('listComponent');
     expect(listElement).toBeDefined();
   });
