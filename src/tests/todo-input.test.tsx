@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render, cleanup } from '@testing-library/react';
+// import { render, cleanup, fireEvent } from '@testing-library/react';
 
 import TodoInput from '../components/todo-input';
 
@@ -23,4 +24,12 @@ describe('TodoInput test', () => {
     const inputConteiner = getByTestId('inputComponent');
     expect(inputConteiner).toBeDefined();
   });
+
+  // test('should call submit', () => {
+  //   const todoSubmit = jest.fn();
+  //   const { getByTestId } = conteiner;
+  //   const inputConteiner = getByTestId('inputComponent');
+  //   fireEvent.submit(inputConteiner);
+  //   expect(todoSubmit).toHaveBeenCalled();
+  // });
 });

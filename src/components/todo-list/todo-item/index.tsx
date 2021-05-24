@@ -60,6 +60,7 @@ const TodoItem: any = ({ todo }) => {
         </Grid>
         <Grid item xs>
           <Button
+            data-testid="deleteBtn"
             onClick={() => todoDeletehandler(todo.id)}
             className={classes.button}
             variant="contained"

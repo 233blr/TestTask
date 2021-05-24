@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render, cleanup } from '@testing-library/react';
+// import { render, cleanup, fireEvent } from '@testing-library/react';
 
 import TodoItem from '../components/todo-list/todo-item';
 
@@ -23,4 +24,15 @@ describe('TodoItem test', () => {
     const itemElement = conteiner.getByTestId('itemComponent');
     expect(itemElement).toBeDefined();
   });
+
+  // test('clich on the delete button', () => {
+  //   const conteiner = render(
+  //     <TodoProvider>
+  //       <TodoItem />
+  //     </TodoProvider>,
+  //   );
+  //   const listElement = conteiner.getByTestId('listComponent');
+  //   const deleteBtn = listElement.getByText('Delete');
+  //   fireEvent.click(deleteBtn); ------?????????
+  // });
 });
