@@ -25,6 +25,9 @@ describe('TodoItem test', () => {
     expect(itemElement).toBeDefined();
   });
 
+  // Сдесь хотел получить кнопку, и проверить вызов функции todoDeletehandler
+  // и отследить удалился ли компонент
+
   // test('clich on the delete button', () => {
   //   const conteiner = render(
   //     <TodoProvider>
@@ -33,6 +36,6 @@ describe('TodoItem test', () => {
   //   );
   //   const listElement = conteiner.getByTestId('listComponent');
   //   const deleteBtn = listElement.getByText('Delete');
-  //   fireEvent.click(deleteBtn); ------?????????
+  //   fireEvent.click(deleteBtn);
   // });
 });

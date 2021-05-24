@@ -25,6 +25,8 @@ describe('TodoInput test', () => {
     expect(inputConteiner).toBeDefined();
   });
 
+  // Вызвать submit
+
   // test('should call submit', () => {
   //   const todoSubmit = jest.fn();
   //   const { getByTestId } = conteiner;
