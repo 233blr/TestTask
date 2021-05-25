@@ -13,3 +13,4 @@ Stack:
 - Webpack
 - eslint
 - uuid
+- bundle size
