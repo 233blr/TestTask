@@ -5,7 +5,7 @@
 Stack:
 
 - React
-- Type Script
+- TypeScript
 - React context
 - Material-ui
 - React-testing-library
