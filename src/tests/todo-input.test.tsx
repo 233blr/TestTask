@@ -5,13 +5,13 @@ import TodoInput from '../components/todo-input';
 import { TodoContext } from '../context';
 
 describe('TodoInput test', () => {
-  let conteiner;
+  let container;
   let todoAddHandlerMock;
 
   beforeEach(() => {
     todoAddHandlerMock = jest.fn();
 
-    conteiner = render(
+    container = render(
       <TodoContext.Provider
         value={{
           todoAddHandler: todoAddHandlerMock,
@@ -32,13 +32,13 @@ describe('TodoInput test', () => {
   });
 
   test('should render TodoInput component', () => {
-    const { getByTestId } = conteiner;
+    const { getByTestId } = container;
     const inputContainer = getByTestId('inputComponent');
     expect(inputContainer).toBeDefined();
   });
 
   test('should call todoAddHandlerMock', () => {
-    const { getByTestId } = conteiner;
+    const { getByTestId } = container;
     const inputContainer = getByTestId('inputComponent');
     fireEvent.submit(inputContainer);
     expect(todoAddHandlerMock).toHaveBeenCalled();
