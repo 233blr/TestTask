@@ -20,7 +20,7 @@ const App: React.FC = () => {
   }, [setTodos]);
 
   return (
-    <Container data-testid="appConteiner" className="App" maxWidth="xl">
+    <Container data-testid="appContainer" className="App" maxWidth="xl">
       <TodoInput />
       <TodoList />
     </Container>

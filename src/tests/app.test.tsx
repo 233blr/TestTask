@@ -1,19 +1,14 @@
 import * as React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import App from '../containers';
-
 import TodoProvider from '../context';
 
 describe('App test', () => {
-  afterEach(() => cleanup());
-
-  let conteiner;
-
-  afterEach(() => cleanup());
+  let container;
 
   beforeEach(() => {
-    conteiner = render(
+    container = render(
       <TodoProvider>
         <App />
       </TodoProvider>,
@@ -21,8 +16,14 @@ describe('App test', () => {
   });
 
   test('should render App component', () => {
-    const { getByTestId } = conteiner;
-    const appConteiner = getByTestId('appConteiner');
-    expect(appConteiner).toBeDefined();
+    const { getByTestId } = container;
+    const appContainer = getByTestId('appContainer');
+    expect(appContainer).toBeDefined();
+  });
+
+  test('should take a snapshot of the App component', () => {
+    const { getByTestId } = container;
+    const appContainer = getByTestId('appContainer');
+    expect(appContainer).toMatchSnapshot();
   });
 });

@@ -1,41 +1,110 @@
 import * as React from 'react';
-import { render, cleanup } from '@testing-library/react';
-// import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import TodoItem from '../components/todo-list/todo-item';
+import { TodoContext } from '../context';
 
-import TodoProvider from '../context';
+describe('TodoItem normal mode test', () => {
+  let container;
+  let todoDeletehandlerMock;
+  let startEditsMock;
 
-describe('TodoItem test', () => {
-  afterEach(() => cleanup());
+  beforeEach(() => {
+    todoDeletehandlerMock = jest.fn();
+    startEditsMock = jest.fn();
 
-  test('should render TodoItem component', () => {
     const item = {
       id: '001',
-      date: '23.05.2021, 23:36:38',
-      text: 'git',
+      date: '02.02.2020, 20:20:20',
+      text: 'test',
     };
 
-    const conteiner = render(
-      <TodoProvider>
+    container = render(
+      <TodoContext.Provider
+        value={{
+          todoAddHandler: jest.fn(),
+          sortedTodos: [],
+          setTodos: jest.fn(),
+          todoEditing: '',
+          open: true,
+          handleClose: jest.fn(),
+          todoDeletehandler: todoDeletehandlerMock,
+          undoEdits: jest.fn(),
+          submitEdits: jest.fn(),
+          startEdits: startEditsMock,
+        }}
+      >
         <TodoItem todo={item} key={item.id} />
-      </TodoProvider>,
+      </TodoContext.Provider>,
     );
-    const itemElement = conteiner.getByTestId('itemComponent');
+  });
+
+  test('should render TodoItem component', () => {
+    const itemElement = container.getByTestId('itemComponent');
     expect(itemElement).toBeDefined();
   });
 
-  // Сдесь хотел получить кнопку, и проверить вызов функции todoDeletehandler
-  // и отследить удалился ли компонент
+  test('should call todoDeletehandler', () => {
+    const itemElement = container.getByTestId('itemComponent');
+    expect(itemElement).toBeDefined();
+    fireEvent.click(container.getByText(/Delete/i));
+    expect(todoDeletehandlerMock).toHaveBeenCalled();
+  });
 
-  // test('clich on the delete button', () => {
-  //   const conteiner = render(
-  //     <TodoProvider>
-  //       <TodoItem />
-  //     </TodoProvider>,
-  //   );
-  //   const listElement = conteiner.getByTestId('listComponent');
-  //   const deleteBtn = listElement.getByText('Delete');
-  //   fireEvent.click(deleteBtn);
-  // });
+  test('should call todoDeletehandler', () => {
+    const itemElement = container.getByTestId('itemComponent');
+    expect(itemElement).toBeDefined();
+    fireEvent.click(container.getByText(/Edit/i));
+    expect(startEditsMock).toHaveBeenCalled();
+  });
+});
+
+describe('TodoItem edit mode test', () => {
+  let container;
+  let undoEditsMock;
+  let submitEditsMock;
+
+  beforeEach(() => {
+    undoEditsMock = jest.fn();
+    submitEditsMock = jest.fn();
+
+    const item = {
+      id: '001',
+      date: '20.20.2020, 20:20:20',
+      text: 'test',
+    };
+
+    container = render(
+      <TodoContext.Provider
+        value={{
+          todoAddHandler: jest.fn(),
+          sortedTodos: [],
+          setTodos: jest.fn(),
+          todoEditing: '001',
+          open: true,
+          handleClose: jest.fn(),
+          todoDeletehandler: jest.fn(),
+          undoEdits: undoEditsMock,
+          submitEdits: submitEditsMock,
+          startEdits: jest.fn(),
+        }}
+      >
+        <TodoItem todo={item} key={item.id} />
+      </TodoContext.Provider>,
+    );
+  });
+
+  test('should call submitEditsMock', () => {
+    const itemElement = container.getByTestId('itemComponent');
+    expect(itemElement).toBeDefined();
+    fireEvent.click(container.getByText(/Submit edits/i));
+    expect(submitEditsMock).toHaveBeenCalled();
+  });
+
+  test('should call undoEditsMock', () => {
+    const itemElement = container.getByTestId('itemComponent');
+    expect(itemElement).toBeDefined();
+    fireEvent.click(container.getByText(/Canсel/i));
+    expect(undoEditsMock).toHaveBeenCalled();
+  });
 });
