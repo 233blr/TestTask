@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.tsx",
+  "homepage": "https://233blr.github.io/UltimateTodo/",
   "scripts": {
     "start": "webpack serve --port 3000 --mode development --open --hot",
     "build": "webpack --mode production",
     "lint": "eslint ./src --ext .ts,.tsx",
-    "test": "jest"
+    "test": "jest",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "author": "",
   "license": "ISC",
