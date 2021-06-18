@@ -2,4 +2,6 @@
 
 /coverage
 
+/.vscode
+
 /src/tests/__snapshots__
